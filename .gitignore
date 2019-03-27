@@ -61,4 +61,4 @@ typings/
 .next
 
 # Sublime projects 
-authentication-token-service.sublime-project
+authentication-token-service.sublime-*
