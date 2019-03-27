@@ -3,4 +3,4 @@
 This module offers ast token retrieval from a redis token store.
 
 ## Run
-To run tis module, install nodemon and then use the command `npm run nodemon`. 
+To run tis module, install nodemon and then use the command `npm run nodemon`. A redis instance must also be running.
