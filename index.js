@@ -2,6 +2,7 @@ const { promisify } = require('util')
 const redis = require('redis')
 const http = require('http')
 const qs = require('qs')
+const config = require('@femto-apps/config')
 
 const client = redis.createClient()
 const getAsync = promisify(client.get).bind(client)
@@ -34,5 +35,5 @@ const server = http.createServer(async (req, res) => {
   res.end()
 })
 
-server.listen(4500)
-console.log('Server listening on port 4500')
+server.listen(config.get('port'))
+console.log(`Server listening on port ${config.get('port')}`)
