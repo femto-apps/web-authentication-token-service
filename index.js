@@ -23,7 +23,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   // get user from token
-  const result = await getAsync(`sessions:${query.token}`)
+  const result = await getAsync(`${config.get('redisSession')}:${query.token}`)
 
   if (!result) {
     res.statusCode = 400
