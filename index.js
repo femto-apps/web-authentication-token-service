@@ -1,9 +1,11 @@
+// Imports 
 const { promisify } = require('util')
 const redis = require('redis')
 const http = require('http')
 const qs = require('qs')
 const config = require('@femto-apps/config')
 
+// Setup the redis client 
 const client = redis.createClient()
 const getAsync = promisify(client.get).bind(client)
 
@@ -12,6 +14,7 @@ client.on('error', err => {
   process.exit(1)
 })
 
+// Setup the http server 
 const server = http.createServer(async (req, res) => {
   const query = qs.parse(req.url.split('?')[1])
   res.setHeader('Content-Type', 'application/json')
@@ -22,7 +25,7 @@ const server = http.createServer(async (req, res) => {
     return res.end()
   }
 
-  // get user from token
+  // Get user from token
   const result = await getAsync(`${config.get('redisSession')}:${query.token}`)
 
   if (!result) {
@@ -35,5 +38,6 @@ const server = http.createServer(async (req, res) => {
   res.end()
 })
 
+// Make the server listen 
 server.listen(config.get('port'))
 console.log(`Server listening on port ${config.get('port')}`)
