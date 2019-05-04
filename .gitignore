@@ -61,4 +61,10 @@ typings/
 .next
 
 # Sublime projects 
-authentication-token-service.sublime-*
+*.sublime-*
+
+# Config file 
+config.js
+config.json
+config.hjson
+
