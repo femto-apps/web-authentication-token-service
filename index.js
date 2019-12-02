@@ -1,5 +1,6 @@
 // Imports 
 const { promisify } = require('util')
+const present = require('present')
 const redis = require('redis')
 const http = require('http')
 const qs = require('qs')
@@ -16,6 +17,7 @@ client.on('error', err => {
 
 // Setup the http server 
 const server = http.createServer(async (req, res) => {
+  const start = present()
   const query = qs.parse(req.url.split('?')[1])
   res.setHeader('Content-Type', 'application/json')
 
@@ -26,7 +28,9 @@ const server = http.createServer(async (req, res) => {
   }
 
   // Get user from token
+  const startGetAsync = present()
   const result = await getAsync(`${config.get('redisSession')}:${query.token}`)
+  console.log(`GET ?token=${query.token} : getAsync ${Math.round((present() - startGetAsync) * 100) / 100}ms`)
 
   if (!result) {
     res.statusCode = 400
@@ -36,6 +40,8 @@ const server = http.createServer(async (req, res) => {
 
   res.write(result)
   res.end()
+
+  console.log(`GET ?token=${query.token} : getReq ${Math.round((present() - start) * 100) / 100}ms`)
 })
 
 // Make the server listen 

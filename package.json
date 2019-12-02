@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@femto-apps/config": "^3.0.0",
+    "present": "^1.0.0",
     "qs": "^6.7.0",
     "redis": "^2.8.0"
   }
