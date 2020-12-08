@@ -6,9 +6,16 @@ const http = require('http')
 const qs = require('qs')
 const config = require('@femto-apps/config')
 
-// Setup the redis client 
-const redisURL = config.get('redisUrl') || 'redis://127.0.0.1:6379/0'
-const client = redis.createClient(redisURL)
+// Setup the redis client
+const client = config.get('redis.url')
+  ? redis.createClient({
+      url: config.get('redis.url')
+    })
+  : redis.createClient({
+      host: config.get('redis.host') || '127.0.0.1',
+      port: config.get('redis.port') || 6379,
+      db: config.get('redis.db') || '0'
+   })
 const getAsync = promisify(client.get).bind(client)
 
 client.on('error', err => {
