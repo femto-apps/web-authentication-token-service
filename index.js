@@ -37,7 +37,7 @@ const server = http.createServer(async (req, res) => {
 
   // Get user from token
   const startGetAsync = present()
-  const result = await getAsync(`${config.get('redisSession')}:${query.token}`)
+  const result = await getAsync(`${config.get('redis.session')}:${query.token}`)
   console.log(`GET ?token=${query.token} : getAsync ${Math.round((present() - startGetAsync) * 100) / 100}ms`)
 
   if (!result) {
